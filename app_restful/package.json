@@ -1,0 +1,9 @@
+{
+    "name" : "kinographControl",
+    "description" : "a RESTful API for controlling a Kinograph machine",
+    "version" : "0.0.1",
+    "private" : true,
+    "dependencies" : {
+        "express" : "4.x"
+    }
+}

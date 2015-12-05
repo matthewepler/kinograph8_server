@@ -1,0 +1,9 @@
+{
+  "name": "kinoTest",
+  "version": "0.0.1",
+  "description": "a test app",
+  "dependencies": {
+    "express": "^4.13.3",
+    "socket.io": "^1.3.5"
+  }
+}
