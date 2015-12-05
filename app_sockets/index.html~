@@ -6,14 +6,13 @@
         <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
    </head>
     <body>
-        <div id="slider"></div>
-        <button id="pushit" type="button">Push It</button>
+        <div id="buttons"></div>
+        <button id="pushitButton" type="button">Push It</button>
     </body>
     <script>
         var socket = io();
-        $("#pushit").click(function() {
-            console.log("capture button event");
-            socket.emit('capture');
+        $("#pushitButton").click(function() {
+            socket.emit('pushitButton');
         });
    </script>
  
