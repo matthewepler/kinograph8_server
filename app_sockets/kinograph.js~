@@ -27,4 +27,5 @@ exports.init = function() {
                   },
    this.light = {on : false},
    this.motor = {on : false}
+    console.log("Kinograph initiated");
 };

@@ -25,7 +25,7 @@ exports.init = function() {
                     exposureC : 0,         // [-10, 10], default = 0 (-ev, --ev) exposure compensation
                     dir       : "output"   // director to which images are saved
                   },
-   this.light = {on : false},
+   this.lamp  = {on : false},
    this.motor = {on : false}
     console.log("Kinograph initiated");
 };
