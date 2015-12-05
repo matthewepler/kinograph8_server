@@ -1,13 +1,14 @@
 // server.js
 
-var express = require('express');
-var app = express();
+var app = require('express')();
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
 var K = require('./kinograph');
 
 K.init();
 
-app,get('/', function(req, res) {
-    res.send("hello there");
+app.get('/', function(req, res) {
+    res.sendFile(__dirname + '/index.html');
 });
 
 var server = app.listen(8080, function() {

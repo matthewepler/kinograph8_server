@@ -1,17 +1,20 @@
 // server.js
 
-var express = require('express');
-var app = express();
+var app = require('express')();
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
 var K = require('./kinograph');
 
 K.init();
 
 app.get('/', function(req, res) {
-    res.send("hello there");
+    res.sendFile(__dirname + '/index.html');
 });
 
-var server = app.listen(8080, function() {
-    var host = server.address().address;
-    var port = server.address().port;
-    console.log("App listening @ http://%s:%s", host, port);
+io.on('connection', function(socket) {
+    console.log('user connected');
+});
+
+http.listen(8080, function() {
+    console.log('listening on *:8080');
 });
