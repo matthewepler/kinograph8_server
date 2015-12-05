@@ -1,8 +1,19 @@
 // server.js
 
-var app = require('express')();
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
+var express = require('express');
+var app = express();
+var server = require('http').createServer(app);
+var io = require('socket.io')(server);
+var port = process.env.PORT || 8080;
+var path = require('path');
+
+server.listen(port, function() {
+    console.log('Server listening at port %d', port);
+});
+
+app.use(express.static(__dirname + '/public'));
+
+
 var K = require('./kinograph');
 var GPIO = require('onoff').Gpio,
     lamp = new GPIO(23, 'out');
@@ -31,9 +42,6 @@ io.on('connection', function(socket) {
     });
 });
 
-http.listen(8080, function() {
-    console.log('listening on *:8080');
-});
 
 function exit() {
     lamp.unexport();
