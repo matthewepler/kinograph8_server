@@ -30,7 +30,7 @@ io.on('connection', function(socket) {
     socket.on('disconnect', function() {
         console.log('user disconnected');
     });
-    socket.on('pushit', function() {
+    socket.on('lamp', function() {
         if(K.lamp.on == false) {
             lamp.write(1);
             K.lamp.on = true;
@@ -39,6 +39,12 @@ io.on('connection', function(socket) {
             K.lamp.on = false;
         }
         if(verbose) console.log("K.lamp.on: %s, lamp pin val: %s", K.lamp.on, lamp.readSync());
+    });
+    socket.on('frame', function() {
+        // check lamp, if not on, turn it on, 
+        // call the exec function to take a frame
+        // turn the lamp off
+        if(verbose) console.log("frame!");
     });
 });
 

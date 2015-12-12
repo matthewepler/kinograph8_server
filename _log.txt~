@@ -1,0 +1,13 @@
+12/05/2015
+- - - - - -
+Got app working. Chose sockets over RESTful because events might come from the
+machine and I don't want to be polling it on the time. 
+
+Next steps:
+> GUI button creates single frame
+    - call exec
+    - check dir for photo
+> show frame in GUI
+> switch creates single frame
+> GUi is updated with latest frame in dir
+

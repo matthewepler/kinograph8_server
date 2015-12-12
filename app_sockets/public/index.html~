@@ -2,19 +2,22 @@
 <html lang="en">
     <head>
         <title>Kinograph</title>
-        <link rel="stylesheet" type="text/css" href="main.css"/>
         <script src="https://cdn.socket.io/socket.io-1.3.5.js"></script>
         <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
    </head>
     <body>
         <div class="buttons">
-            <button id="pushit" type="button">Lamp</button>
+            <button id="lamp" type="button">Lamp</button>
+            <button id="frame" type="button">Frame</button>
         </div> 
    </body>
     <script>
         var socket = io();
-        $("#pushit").click(function() {
-            socket.emit('pushit');
+        $("#lamp").click(function() {
+            socket.emit('lamp');
+        });
+        $("#frame").click(function() {
+            socket.emit('frame');
         });
    </script>
  
