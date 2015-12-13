@@ -10,4 +10,47 @@ Next steps:
 > show frame in GUI
 > switch creates single frame
 > GUi is updated with latest frame in dir
+> connection feedback on GUI and hardware
 
+
+12/13/2015
+- - - - - -
+Working on using the exec() function to capture frame.
+
+**NTS** The LED on the camera needs to be disabled to avoid light leakage. To do this,
+you have to edit the /boot/config.txt file. This should be included in distro.
+
+Capture time is too long. Focus and metering could be holding it up.
+
+In looking for info on what is not fully manual, I came across this thread
+that points to many other layers beyond the scripted interface of the camera's
+functionality: https://github.com/raspberrypi/userland/issues/151. It includes
+discussion of EV and vignette compensation that should be looked into.
+
+For now, I'm going to try the original poster's strategy of using EV to get a
+consistent result. He still reports slight variations, though, which may be
+trouble for Kinograph. Should also look into exactly what I can do with raw
+option.
+
+The frame is being taken, but the light stays on, implying that the camera
+process is not killed when taking just one frame. This also means the callback
+Im using to signal the end of the process is never being called. A hack might
+be to look at the output directory and when a new file is written, call a
+function. Will need to verify that this can be done when the file is closed,
+not upon creation. 
+
+Turns out you can do this by looking for a "rename" event, which signals a
+file being changed from a temp file to a permanent one. I'm using the watch
+module for this but in the raspicam module there is a way to do this without
+the watch module.
+
+ALso worth looking into is the mode of shooting stills that utilizes signal
+mode, which allwos the camera process to stay open and capture new still
+everytime a signal is sent. Sounds better.
+
+1. get camera ready -build exec string and launch raspistill app
+2. send a signal each time frame is called, set K.ready to false
+3. when new file 'rename' event detected, reset K.ready to true
+
+Test w/out watch to ensure file writing is happening as expected.
+Add watch.

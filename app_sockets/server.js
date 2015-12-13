@@ -6,6 +6,7 @@ var server = require('http').createServer(app);
 var io = require('socket.io')(server);
 var port = process.env.PORT || 8080;
 var path = require('path');
+var exec = require('child_process').exec;
 
 server.listen(port, function() {
     console.log('Server listening at port %d', port);
@@ -18,6 +19,7 @@ var K = require('./kinograph');
 var GPIO = require('onoff').Gpio,
     lamp = new GPIO(23, 'out');
 var verbose = true;
+var procID;
 
 K.init();
 
@@ -41,13 +43,48 @@ io.on('connection', function(socket) {
         if(verbose) console.log("K.lamp.on: %s, lamp pin val: %s", K.lamp.on, lamp.readSync());
     });
     socket.on('frame', function() {
-        // check lamp, if not on, turn it on, 
-        // call the exec function to take a frame
-        // turn the lamp off
-        if(verbose) console.log("frame!");
+       if(!K.running) cameraReady(); 
+       if(K.running && K.ready) {
+           exec("kill -USR1 " + procID);
+           // K.ready = false, reset in watch 
+       } else {
+            console.log("camera not running, no frame captured.");
+       }
+       if(verbose) console.log("frame!");
     });
 });
 
+function cameraReady() {
+    lamp.write(1);
+    K.lamp.on = true;
+    if(K.running) {
+         exec('pkill raspistill', function(err, stdout, stderr) {
+             if(err) console.log("ERROR (err) w/ pkill in cameraReady() " + err);
+             if(stderr) console.log("ERROR (std) w/ pikill in cameraReady() " + stderr);  
+         });
+    }
+    console.log("starting camera...");
+    var cmdString = buildCmdString();
+    exec(cmdString, function(err, stdout, stderr) {
+        if(err) console.log("ERROR (err) initiating cameraReady(): " + err);
+        if(stderr) console.log("ERROR (std) initiating cameraRead(): " + stderr);
+    });
+    K.running = true;
+    K.ready = true;
+    exec('pgrep raspistill', function(err, stdout, stderr) {
+        procID = stdout;
+    }); 
+}
+
+function buildCmdString() {
+    var cmdString = 'raspistill -n -l -th -s'; // no preview, latest link, thumbnail, signal mode
+    for (var key in K.camera) {
+        cmdString += ' --' + key + ' ' + K.camera[key]; 
+    }
+    cmdString += " &";
+    //if(verbose) console.log(cmdString);
+    return cmdString;
+}
 
 function exit() {
     lamp.unexport();
