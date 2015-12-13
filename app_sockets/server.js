@@ -7,6 +7,7 @@ var io = require('socket.io')(server);
 var port = process.env.PORT || 8080;
 var path = require('path');
 var exec = require('child_process').exec;
+var watch = require('watch');
 
 server.listen(port, function() {
     console.log('Server listening at port %d', port);
@@ -20,6 +21,19 @@ var GPIO = require('onoff').Gpio,
     lamp = new GPIO(23, 'out');
 var verbose = true;
 var procID;
+
+watch.createMonitor(__dirname + '/public/frames', 
+        {
+            ignoreDotFiles: true,
+            ignoreNotPermitted: true,
+        }, function(monitor) {
+            monitor.on('changed', function(f, curr, prev) {
+                console.log("changed: " + f);
+            });
+            monitor.on('created', function(f, stat) {
+                console.log("created: " + f);
+            });
+        });
 
 K.init();
 
@@ -88,6 +102,7 @@ function buildCmdString() {
 
 function exit() {
     lamp.unexport();
+    monitor.stop();
     process.exit();
 }
 process.on('SIGINT', exit);

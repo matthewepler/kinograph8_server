@@ -4,7 +4,7 @@ exports.init = function() {
                     contrast  : 0,         // [-100, 100], default = 0 (-co, --contrast)
                     brightness: 50,        // [0, 100], default = 50   (-br, --brightness)
                     saturation: 0,         // [-100, 100], default = 0 (-sa, --saturation)
-                    ISO       : 100,       // [100, 800], default = ?  (-ISO, --ISO)
+                    ISO       : 400,       // [100, 800], default = ?  (-ISO, --ISO)
                     ev        : 0,         // [-10, 10], default = 0
                     exposure  : "fixedfps",// see picam docs for options (-ex, --exposure)
                     awb       : "off",     // see picam docs for options (-awb, --awb)
@@ -17,7 +17,7 @@ exports.init = function() {
                     output    : './public/frames/%06d.jpg',// (-o, --output)
                     timeout   : 0,         // default = 5 sec.
                     encoding  : "jpg",     // [jpg, bmp, gif, png] (-e, --encoding)
-                    ev        : 0         // [-10, 10], default = 0 (-ev, --ev) exposure compensation
+                    ev        : -24         // [-10, 10], default = 0 (-ev, --ev) exposure compensation
                   },
    this.lamp  = {on : false},
    this.motor = {on : false}
