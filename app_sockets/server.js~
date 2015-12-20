@@ -25,7 +25,7 @@ var procID;
 watch.createMonitor(__dirname + '/public/frames', 
         {
             ignoreDotFiles: true,
-            ignoreNotPermitted: true
+            ignoreNotPermitted: true,
         }, function(monitor) {
             monitor.on('changed', function(f, curr, prev) {
                 console.log("changed: " + f);

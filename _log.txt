@@ -52,6 +52,5 @@ everytime a signal is sent. Sounds better.
 2. send a signal each time frame is called, set K.ready to false
 3. when new file 'rename' event detected, reset K.ready to true
 
-Get the PID!
-Test w/out watch to ensure file writing is happening as expected.
-Add watch.
+watch isn't really working. will try checking number of files in a while loop
+next.
