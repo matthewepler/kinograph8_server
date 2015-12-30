@@ -51,6 +51,25 @@ everytime a signal is sent. Sounds better.
 1. get camera ready -build exec string and launch raspistill app
 2. send a signal each time frame is called, set K.ready to false
 3. when new file 'rename' event detected, reset K.ready to true
+4. when done, kill camera using process id.
 
 watch isn't really working. will try checking number of files in a while loop
 next.
+
+
+12/20/2015
+- - - - - -
+OUTLINE
+1. Verify frame is being taken and stored properly.
+2. Find a way to determine when the file is done being written 
+   a. callback in exec
+   b. scan output directory
+3. calculate the time it's taking to take a frame and save it. That's my
+current fps.
+   a. acceptable? move on.
+   b. not acceptable? by how much, and what are my options.
+
+Ways to get a process id (PID):
+   1. when using the exec function, set it equal to a variable so an object is
+created. In the callback, call the variable(object) name.pid.
+   2. use the linux command 'pgrep <app>', ex 'pgrep raspistill'
