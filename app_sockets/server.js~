@@ -19,7 +19,7 @@ app.use(express.static(__dirname + '/public'));
 var K = require('./kinograph');
 var GPIO = require('onoff').Gpio,
     lamp = new GPIO(23, 'out'),
-    gate = new GPIO(26, 'in');
+    gate = new GPIO(26, 'in', 'falling');
 var verbose = true;
 
 
@@ -81,12 +81,21 @@ function captureFrame() {
 }
  
 
+// turn motor. 
+// when gate falls (1 -> 0) captureFrame
+// when captureFrame is complete, turn motor
+
+var prevGateState;
 gate.watch( function(err, value) {
     if (err) {
         throw err;
     }
-    console.log("gate edge: " + gate.edge());
-    console.log("value = " + value);
+	// if gate is not the same as it was
+	if (value !== prevGateState) {
+	//	value == 0 ? console.log("gate = 0") : console.log("gate = 1");
+		console.log("take a picture, ma");
+	}
+	prevGateState = value;
 });
 
 
