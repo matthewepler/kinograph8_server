@@ -50,36 +50,32 @@ io.on('connection', function(socket) {
 });
 
 
-var pid = '';
 var counter = 0;
-var prevFiles = 0;
-var currFiles = 0;
 function captureFrame() {
     lamp.write(1);
     K.lamp.on=true;
-
-    fs.readdir(__dirname + '/public/frames/', function(err, items) {
-        if(err) {
-            console.log("readdir err!" + err);
-            return;
-        } else {
-            currFiles = items.length;
-            console.log("currFiles = " + currFiles);
-        }
-    }); 
-    console.log(Date.now());
-    var frame = exec('raspistill -n -t 1 -o ' + __dirname + '/public/frames/' + Date.now() + '.jpg', 
-                function(err, stdout, stderr) {
-                    if(err) return;
+    var frame = exec(buildExecString(), 
+			function(err, stdout, stderr) {
+                    if (err) throw err;
                     exec('kill ' + frame.pid);
-                    console.log("frame saved");
-                    console.log(Date.now());
-                });
-    
-    lamp.write(0);
-    K.lamp.on=false;
-}
+					counter += 1;
+					lamp.write(0);
+    				K.lamp.on=false;
+                    console.log(counter + " frames saved");
+            });
+	
+	}
  
+function buildExecString() {
+	var tmpString = 'raspistill -n -o ' + __dirname + '/public/frames/' + Date.now() + '.jpg';
+	for (var x in K.camera) {
+		if (K.camera.hasOwnProperty(x)) {
+			tmpString += ' --' + x + ' ' + K.camera[x];
+		}
+	}
+	if (verbose) console.log(tmpString);
+	return tmpString;
+}
 
 // turn motor. 
 // when gate falls (1 -> 0) captureFrame
@@ -90,10 +86,11 @@ gate.watch( function(err, value) {
     if (err) {
         throw err;
     }
-	// if gate is not the same as it was
+	// falling edge 
 	if (value == 0 && value !== prevGateState) {
-	//	value == 0 ? console.log("gate = 0") : console.log("gate = 1");
-		console.log("take a picture, ma");
+		// stop motor
+		captureFrame();
+		if (verbose) console.log("gate fallin");
 	}
 	prevGateState = value;
 });

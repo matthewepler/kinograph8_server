@@ -14,14 +14,11 @@ exports.init = function() {
                     drc       : "off",     // [off, low, medium, high], default = off (-drc, --drc)
                     mode      : 2,         // see picam docs for options (-md, --mode)
                     quality   : 100,       // [0, 100], default = ? (-q, --quality)
-                    output    : './public/frames/%06d.jpg',// (-o, --output)
-                    timeout   : 0,         // default = 5 sec.
+                    timeout   : 1,         // default = 5 sec.
                     encoding  : "jpg",     // [jpg, bmp, gif, png] (-e, --encoding)
-                    ev        : -24         // [-10, 10], default = 0 (-ev, --ev) exposure compensation
+                    ev        : 0         // [-10, 10], default = 0 (-ev, --ev) exposure compensation
                   },
    this.lamp  = {on : false},
    this.motor = {on : false}
-   this.ready = false;
-   this.running = false;
-    console.log("Kinograph initiated");
+   console.log("Kinograph initiated");
 };

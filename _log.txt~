@@ -103,6 +103,16 @@ THEN: add a motor that listens for when to move and when to stop according to
 the switch state.
 
 
+01/09/2016
+- - - - - -
+Got the switch working and capture working at 1fps. Will give the code to
+community to help me make it faster when I'm ready to release.
+
+As for the motor - will come back to this. 
+
+NEXT: Frame button in GUI -> display frame on screen + all camera settings. 
+NEXT: adjust settings, take new frame, update everything. 
+
 
 
 

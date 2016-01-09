@@ -10,6 +10,9 @@
             <button id="lamp" type="button">Lamp</button>
             <button id="frame" type="button">Frame</button>
         </div> 
+		<div class="settings">
+			
+		</div>
    </body>
     <script>
         var socket = io();
