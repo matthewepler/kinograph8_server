@@ -69,3 +69,44 @@ current fps.
    a. acceptable? move on.
    b. not acceptable? by how much, and what are my options.
 
+Ways to get a process id (PID):
+   1. when using the exec function, set it equal to a variable so an object is
+created. In the callback, call the variable(object) name.pid.
+   2. use the linux command 'pgrep <app>', ex 'pgrep raspistill'
+
+
+01/08/2016
+- - - - - -
+Need to determine time it takes to take 1 frame. Currently, the exec function
+calls the raspistill program with a '-t' timeout flag of 1 second. Calling it
+with zero makes it stay on infinitely. 
+
+Trying to implement signal mode. See raspistill documentation. 
+
+According to forums (see raspiFastCamD), the Pi isn't capable of doing
+anything very fast. Someone on that forum had a Python implementation that
+achieved 1.7fps but at 640x480 resolution. 
+
+Could it be that my machine can only run at 1fps? I don't think people will
+care. 
+
+If that's the case, I probably don't have to worry about making it run faster.
+As long as the 1fps works reliably (i.e. no black frames or missed frames).
+Will test that now. 
+
+1fps seems to work fine. I'm going to move on and if I need to get something
+faster, I can bring in a developer later or even push a firmware update after
+the units are out. 
+
+NEXT: get the switch to activate the frame capture.
+THEN: add a motor that listens for when to move and when to stop according to
+the switch state.
+
+
+
+
+
+
+
+
+
