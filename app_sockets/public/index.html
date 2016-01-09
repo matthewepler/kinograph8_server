@@ -4,17 +4,38 @@
         <title>Kinograph</title>
         <script src="https://cdn.socket.io/socket.io-1.3.5.js"></script>
         <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+		<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+	    <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">	
+		<script>
+			$(function() {
+				$("#sharpness-slider").slider({
+					value: 0,
+					min: -100,
+					max: 100,
+					step: 10,
+					slide: function( event, ui ) {
+						$("#sharpness-amount").val("$" + ui.value);
+					}
+				});
+				$("#sharpness-amount").val("$" + $("#sharpness-slider").slider("value"));
+			});
+		</script>
    </head>
-    <body>
+    
+   <body>
         <div class="buttons">
             <button id="lamp" type="button">Lamp</button>
             <button id="frame" type="button">Frame</button>
         </div> 
 		<div class="settings">
-			
+			<p>
+				<label for="sharpness-amount">Sharpness [-100, 100]</label>
+				<input type="text" id="sharpness-amount" readonly style="border:0; color:#f6931f; font-weight:bold">
+			</p>
+			<div id="sharpness-slider"></div>	
 		</div>
    </body>
-    <script>
+        <script>
         var socket = io();
         $("#lamp").click(function() {
             socket.emit('lamp');
