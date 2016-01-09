@@ -47,6 +47,9 @@ io.on('connection', function(socket) {
     socket.on('frame', function() {
         captureFrame();
     });
+	socket.on('sharpness', function(data) {
+		console.log(data);
+	});
 });
 
 

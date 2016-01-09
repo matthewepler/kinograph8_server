@@ -113,7 +113,8 @@ As for the motor - will come back to this.
 NEXT: Frame button in GUI -> display frame on screen + all camera settings. 
 NEXT: adjust settings, take new frame, update everything. 
 
-
+-first slider working. need to hook it up to the app so that it actually
+changes the setting in the Kinograph object.
 
 
 

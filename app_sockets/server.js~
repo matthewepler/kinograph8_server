@@ -47,6 +47,9 @@ io.on('connection', function(socket) {
     socket.on('frame', function() {
         captureFrame();
     });
+	socket.on('sharpness', function(data) {
+		console.log(data);
+	});
 });
 
 
@@ -67,7 +70,7 @@ function captureFrame() {
 	}
  
 function buildExecString() {
-	var tmpString = 'raspistill -n -o ' + __dirname + '/public/frames/%06d.jpg';
+	var tmpString = 'raspistill -n -o ' + __dirname + '/public/frames/' + Date.now() + '.jpg';
 	for (var x in K.camera) {
 		if (K.camera.hasOwnProperty(x)) {
 			tmpString += ' --' + x + ' ' + K.camera[x];

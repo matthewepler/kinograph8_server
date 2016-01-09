@@ -14,10 +14,10 @@
 					max: 100,
 					step: 10,
 					slide: function( event, ui ) {
-						$("#sharpness-amount").val("$" + ui.value);
+						$("#sharpness-amount").val(ui.value);
 					}
 				});
-				$("#sharpness-amount").val("$" + $("#sharpness-slider").slider("value"));
+				$("#sharpness-amount").val( $("#sharpness-slider").slider("value") );
 			});
 		</script>
    </head>
@@ -43,6 +43,9 @@
         $("#frame").click(function() {
             socket.emit('frame');
         });
+		$(".settings").mouseup(function() {
+			socket.emit('sharpness', {sharpness: $("#sharpness-amount").val()});
+		});
    </script>
  
 </html>
