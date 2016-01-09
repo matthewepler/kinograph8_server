@@ -18,7 +18,8 @@ app.use(express.static(__dirname + '/public'));
 
 var K = require('./kinograph');
 var GPIO = require('onoff').Gpio,
-    lamp = new GPIO(23, 'out');
+    lamp = new GPIO(23, 'out'),
+    gate = new GPIO(26, 'in');
 var verbose = true;
 
 
@@ -44,15 +45,16 @@ io.on('connection', function(socket) {
         if(verbose) console.log("K.lamp.on: %s, lamp pin val: %s", K.lamp.on, lamp.readSync());
     });
     socket.on('frame', function() {
-        captureInSignalMode();
+        captureFrame();
     });
 });
+
 
 var pid = '';
 var counter = 0;
 var prevFiles = 0;
 var currFiles = 0;
-function captureInSignalMode() {
+function captureFrame() {
     lamp.write(1);
     K.lamp.on=true;
 
@@ -65,11 +67,13 @@ function captureInSignalMode() {
             console.log("currFiles = " + currFiles);
         }
     }); 
+    console.log(Date.now());
     var frame = exec('raspistill -n -t 1 -o ' + __dirname + '/public/frames/' + Date.now() + '.jpg', 
                 function(err, stdout, stderr) {
                     if(err) return;
                     exec('kill ' + frame.pid);
                     console.log("frame saved");
+                    console.log(Date.now());
                 });
     
     lamp.write(0);
@@ -77,10 +81,18 @@ function captureInSignalMode() {
 }
  
 
+gate.watch( function(err, value) {
+    if (err) {
+        throw err;
+    }
+    console.log("gate edge: " + gate.edge());
+    console.log("value = " + value);
+});
 
 
 function exit() {
     lamp.unexport();
+    gate.unexport();
     process.exit();
 }
 process.on('SIGINT', exit);
