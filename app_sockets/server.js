@@ -46,8 +46,10 @@ io.on('connection', function(socket) {
     });
     socket.on('frame', function() {
         captureFrame();
+		sendNewFrame();
     });
 	socket.on('sharpness', function(data) {
+		// left off here.
 		console.log(data);
 	});
 });
@@ -69,6 +71,10 @@ function captureFrame() {
 	
 	}
  
+function sendNewFrame() {
+	
+}
+
 function buildExecString() {
 	var tmpString = 'raspistill -n -o ' + __dirname + '/public/frames/' + Date.now() + '.jpg';
 	for (var x in K.camera) {

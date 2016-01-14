@@ -116,6 +116,27 @@ NEXT: adjust settings, take new frame, update everything.
 -first slider working. need to hook it up to the app so that it actually
 changes the setting in the Kinograph object.
 
+Also, found this thread that explains why timeout works the way it does and
+verifies that getting it to work differently will take some chops:
+https://github.com/raspberrypi/userland/issues/212
+
+In the thread, it mentions that the reason for the long time it takes to take
+a single shot is that the camera has to power up before it takes the shot each
+time. I wonder if I can get around that through timelapse functions - but
+the one included doesn't come with a trigger setting. And the signal mode only
+works for one frame. (TBC)
+
+OKAY - maybe not true.
+
+NEXT - try runing -t 0 and using signal mode. That might do it. 
+
+FIRST - I'm going to try my phone. If I can get a decent recording and pull
+the frames out when the film is still then I have a better and cheaper
+solution. Will require a sound signature generated to signal a still frame so
+automated frame extraction will be easier in post. This will also require
+writing an iOS app. Eugh. Godammit. 
+
+
 
 
 

@@ -27,6 +27,9 @@
             <button id="lamp" type="button">Lamp</button>
             <button id="frame" type="button">Frame</button>
         </div> 
+		<div class="preview">
+			<img id="preview-image"/>
+		</div>
 		<div class="settings">
 			<p>
 				<label for="sharpness-amount">Sharpness [-100, 100]</label>
@@ -45,6 +48,9 @@
         });
 		$(".settings").mouseup(function() {
 			socket.emit('sharpness', {sharpness: $("#sharpness-amount").val()});
+		});
+		socket.on('newFrame', function(data) {
+
 		});
    </script>
  
