@@ -51,9 +51,12 @@ io.on('connection', function(socket) {
 		// emit 'newFrame' with data object
     });
 	
-	socket.on('sharpness', function(data) {
-		// left off here.
-		console.log(data);
+	socket.on('update', function(data) {
+		if (verbose) console.log("settings update: " + data);
+		if (K.camera.hasOwnProperty( data['name'] )) {
+			K.camera[ data['name'] ] = data['value'];
+		}
+		if (verbose) console.log(K.camera);
 	});
 });
 

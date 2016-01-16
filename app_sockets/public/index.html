@@ -8,7 +8,7 @@
 	    <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">	
 		<script>
 			$(function() {
-				$("#sharpness-slider").slider({
+				$("#sharpness").slider({
 					value: 0,
 					min: -100,
 					max: 100,
@@ -17,7 +17,7 @@
 						$("#sharpness-amount").val(ui.value);
 					}
 				});
-				$("#sharpness-amount").val( $("#sharpness-slider").slider("value") );
+				//$("#sharpness-amount").val( $("#sharpness-slider").slider("value") ); 
 			});
 		</script>
    </head>
@@ -35,7 +35,7 @@
 				<label for="sharpness-amount">Sharpness [-100, 100]</label>
 				<input type="text" id="sharpness-amount" readonly style="border:0; color:#f6931f; font-weight:bold">
 			</p>
-			<div id="sharpness-slider"></div>	
+			<div id="sharpness"></div>	
 		</div>
    </body>
         <script>
@@ -54,17 +54,13 @@
 		var thisTarget = null;
 		$(".settings").mousedown( function(e) {
 			thisTarget = $(e.target).parent().attr('id');
-			console.log(thisTarget);
 		});
 
 		$(document).mouseup( function() {
 			if (thisTarget !== null) {
-				switch( thisTarget ) {
-					case 'sharpness-slider':
-							socket.emit('sharpness', {sharpness: $("#sharpness-amount").val()});
-							thisTarget = null;
-							break;
-				}
+				var thisValue  = $("#" + thisTarget).slider("value");
+				socket.emit('update', {name: thisTarget, value: thisValue});
+				thisTarget = null;
 			}
 		});
    </script>
