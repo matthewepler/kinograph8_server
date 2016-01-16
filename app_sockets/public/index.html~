@@ -46,13 +46,26 @@
         $("#frame").click(function() {
             socket.emit('frame');
         });
-		$(".settings").mouseup(function() {
-			socket.emit('sharpness', {sharpness: $("#sharpness-amount").val()});
-		});
 		socket.on('newFrame', function(data) {
 			console.log(data);
 			console.log("hi");
 		});
+
+		var thisTarget = null;
+		$(".settings").mousedown( function(e) {
+			thisTarget = $(e.target).parent().attr('id');
+			console.log(thisTarget);
+		});
+
+		$(document).mouseup( function() {
+			if (thisTarget !== null) {
+				switch( thisTarget ) {
+					case 'sharpness-slider':
+							socket.emit('sharpness', {sharpness: $("#sharpness-amount").val()});
+							break;
+				}
+			}
+		});
    </script>
  
-</html>
+   </html>
