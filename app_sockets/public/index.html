@@ -50,7 +50,8 @@
 			socket.emit('sharpness', {sharpness: $("#sharpness-amount").val()});
 		});
 		socket.on('newFrame', function(data) {
-
+			console.log(data);
+			console.log("hi");
 		});
    </script>
  

@@ -20,7 +20,7 @@ var K = require('./kinograph');
 var GPIO = require('onoff').Gpio,
     lamp = new GPIO(23, 'out'),
     gate = new GPIO(26, 'in', 'falling');
-var verbose = true;
+var verbose = false;
 
 
 K.init();
@@ -44,10 +44,13 @@ io.on('connection', function(socket) {
         }
         if(verbose) console.log("K.lamp.on: %s, lamp pin val: %s", K.lamp.on, lamp.readSync());
     });
-    socket.on('frame', function() {
-        captureFrame();
-		sendNewFrame();
+    
+	socket.on('frame', function() {
+		captureFrame();
+		// sendNewFrame();	
+		// emit 'newFrame' with data object
     });
+	
 	socket.on('sharpness', function(data) {
 		// left off here.
 		console.log(data);
@@ -66,13 +69,19 @@ function captureFrame() {
 					counter += 1;
 					lamp.write(0);
     				K.lamp.on=false;
-                    console.log(counter + " frames saved");
-            });
-	
-	}
+                    if(verbose) console.log(counter + " frames saved");
+            });	
+}
  
 function sendNewFrame() {
-	
+	fs.readdir(__dirname +"/public/frames/", function(err, items) {
+		if (!err) {
+			return {filename: items[items.length-1]};
+		} else {
+			throw err;
+			return {filename: "ERROR LOADING FILE."};
+		}
+	});
 }
 
 function buildExecString() {
