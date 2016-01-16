@@ -1,5 +1,5 @@
 // server.js
-
+var verbose = true;
 var express = require('express');
 var app = express();
 var server = require('http').createServer(app);
@@ -20,8 +20,6 @@ var K = require('./kinograph');
 var GPIO = require('onoff').Gpio,
     lamp = new GPIO(23, 'out'),
     gate = new GPIO(26, 'in', 'falling');
-var verbose = false;
-
 
 K.init();
 
@@ -42,7 +40,7 @@ io.on('connection', function(socket) {
             lamp.write(0);
             K.lamp.on = false;
         }
-        if(verbose) console.log("K.lamp.on: %s, lamp pin val: %s", K.lamp.on, lamp.readSync());
+        if(verbose) console.log("\nK.lamp.on: %s, lamp pin val: %s", K.lamp.on, lamp.readSync());
     });
     
 	socket.on('frame', function() {
@@ -52,11 +50,14 @@ io.on('connection', function(socket) {
     });
 	
 	socket.on('update', function(data) {
-		if (verbose) console.log("settings update: " + data);
-		if (K.camera.hasOwnProperty( data['name'] )) {
-			K.camera[ data['name'] ] = data['value'];
+		var name = data['name'];
+		var val  = data['value'];
+		if (verbose) console.log("\nSettings update: " + name + ", " + val);
+		if (K.camera.hasOwnProperty( name )) {
+			K.camera[ name ] = val;
 		}
-		console.log(K.camera);
+		if (verbose) console.log("\nK.camera settings =");
+		if (verbose) console.log(K.camera);
 	});
 });
 
@@ -72,18 +73,22 @@ function captureFrame() {
 					counter += 1;
 					lamp.write(0);
     				K.lamp.on=false;
-                    if(verbose) console.log(counter + " frames saved");
+                    if(verbose) console.log("\nCaptureFrame(): " + counter + " frames saved");
             });	
 }
  
 function sendNewFrame() {
+	var filenameStr = '';
 	fs.readdir(__dirname +"/public/frames/", function(err, items) {
 		if (!err) {
-			return {filename: items[items.length-1]};
+			filenameStr = items[items.length-1];
 		} else {
 			throw err;
-			return {filename: "ERROR LOADING FILE."};
+			filenameStr = "ERROR LOADING FILE."
 		}
+
+		if (verbose) console.log("\nReturned from sendNewFrame(): " + filenameStr);
+		return {filename: filenameStr};
 	});
 }
 
@@ -94,7 +99,7 @@ function buildExecString() {
 			tmpString += ' --' + x + ' ' + K.camera[x];
 		}
 	}
-	if (verbose) console.log(tmpString);
+	if (verbose) console.log("\nReturned from buildExecString(): " + tmpString);
 	return tmpString;
 }
 
@@ -111,13 +116,14 @@ gate.watch( function(err, value) {
 	if (value == 0 && value !== prevGateState) {
 		// stop motor
 		captureFrame();
-		if (verbose) console.log("gate fallin");
+		if (verbose) console.log("\ngate fallin");
 	}
 	prevGateState = value;
 });
 
 
 function exit() {
+	console.log("Exiting Kinograph");
     lamp.unexport();
     gate.unexport();
     process.exit();
