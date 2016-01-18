@@ -22,18 +22,81 @@
 
 		<div class="settings">
 			<p>
-				<label for="sharpness-amount">Sharpness [-100, 100]</label>
+				<label for="sharpness-amount">Sharpness [-100, 100] (default = 0)</label>
 				<input type="text" id="sharpness-amount" readonly style="border:0; color:#f6931f; font-weight:bold">
 			</p>
 			<div id="sharpness"></div>	
 			
 			<p>
-				<label for="contrast-amount">Contrast [-100, 100]</label>
+				<label for="contrast-amount">Contrast [-100, 100] (default = 0)</label>
 				<input type="text" id="contrast-amount" readonly style="border:0; color:#f6931f; font-weight:bold">
 			</p>
 			<div id="contrast"></div>	
 
-		</div>
+			<p>
+				<label for="brightness-amount">Brightness [0, 100] (default = 50)</label>
+				<input type="text" id="brightness-amount" readonly style="border:0; color:#f6931f; font-weight:bold">
+			</p>
+			<div id="brightness"></div>	
+
+			<p>
+				<label for="saturation-amount">Saturation [-100, 100] (default = 0)</label>
+				<input type="text" id="saturation-amount" readonly style="border:0; color:#f6931f; font-weight:bold">
+			</p>
+			<div id="saturation"></div>	
+
+			<p>
+				<label for="ISO-amount">ISO [100, 800] (default = 400)</label>
+				<input type="text" id="ISO-amount" readonly style="border:0; color:#f6931f; font-weight:bold">
+			</p>
+			<div id="ISO"></div>	
+
+			<p>
+				<label for="ev-amount">EV Compensation [-10, 10] (default = 0)</label>
+				<input type="text" id="ev-amount" readonly style="border:0; color:#f6931f; font-weight:bold">
+			</p>
+			<div id="ev"></div>	
+
+		</div> <!-- end of 'settings' -->
+			
+		<div class="form-settings">
+			<form action="#">
+			<p>
+				<label for="exposure">Exposure (default = "fixedfps")</label>
+				<input type="text" id="exposure-amount" readonly style="border:0; color:#f6931f; font-weight:bold">
+				<select name="exposure" id="exposure">
+					<option>fixedfps</option>
+					<option>auto</option>
+					<option>night</option>
+					<option>nightpreview</option>
+					<option>backlight</option>
+					<option>spotlight</option>
+					<option>sports</option>
+					<option>snow</option>
+					<option>beach</option>
+					<option>verylong</option>
+					<option>antishake</option>
+					<option>fireworks</option>
+				</select>
+			</p>
+
+			<p>
+				<label for="awb">Auto White Balance (default = "off")</label>
+				<input type="text" id="awb-amount" readonly style="border:0; color:#f6931f; font-weight:bold">
+				<select name="awb" id="awb">
+					<option>off</option>
+					<option>auto</option>
+					<option>sun</option>
+					<option>cloud</option>
+					<option>shade</option>
+					<option>tungsten</option>
+					<option>fluorescent</option>
+					<option>incandescent</option>
+					<option>flash</option>
+					<option>horizon</option>
+				</select>
+			</p>
+		</div><!-- end of 'form-settings' -->
 
    </body>
 

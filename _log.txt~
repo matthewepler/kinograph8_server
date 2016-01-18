@@ -151,3 +151,22 @@ THEN: get the frame working.
 - - - - - -
 Sliders electric.
 
+NEXT: separate into basic/advanced controls. Make collapsable
+NEXT: reset defaults
+NEXT: save (and it loads automatically when you login/restart server)
+NEXT: list of saved configurations
+
+May need a more robust backend that can populate the default "value" values
+for each of the sliders and selectmenus based on the Kinograph object.
+Otherwise, the sliders and form settings would always be populated with the
+defaults set by me and wouldn't load the last used settings. UNLESS, at the
+top of the sliders setup it checks for an existing settings file (or the last
+used settings which I write to a text file before closing). Yeah, that sounds
+cool. Add that to the list, sucka.
+
+Ideally, it would work like Meteor with persistent back and forth between
+client and server. I'm naieve in this realm and perhaps something like Angular
+is an option too but I'll leave it to others to help me here. I should ask
+someone. Ergh. Foiled again.
+
+THEN: whatever I just decided on in the explanation above. 

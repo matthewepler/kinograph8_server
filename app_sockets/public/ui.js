@@ -30,4 +30,7 @@ $(document).mouseup( function(e) {
 	}
 });	
 
-
+/* form event emitters */
+$(".form-settings").on("selectmenuchange", function(e, ui) {
+	socket.emit('update', {name: $(e.target).attr('id'), value: ui.item.value});
+});
