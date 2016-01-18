@@ -137,8 +137,17 @@ automated frame extraction will be easier in post. This will also require
 writing an iOS app. Eugh. Godammit. 
 
 
+01/16/2016
+- - - - - -
+Got the slider working with mouseup out of the element, sending the data in a
+single event, receiving the data, and updating the K.camera object. Also
+cleaned up some of the verbose console.log calls. 
+
+NEXT: more sliders.
+THEN: get the frame working.
 
 
-
-
+01/17/2016
+- - - - - -
+Sliders electric.
 

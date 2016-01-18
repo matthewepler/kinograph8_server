@@ -14,29 +14,17 @@ socket.on('newFrame', function(data) {
 });
 
 
-/* sliders setup */
-$(function() {
-	$("#sharpness-slider").slider({
-		value: 0,
-		min: -100,
-		max: 100,
-		step: 10,
-		slide: function(event, ui) {
-			$("#sharpness-amount").val(ui.value);
-		}
-	});
-	$("#sharpness-amount").val($("#sharpness-slider").slider("value"));
-});
-
 /* sliders event emitters */
 
 var thisTarget = null;
 $(".settings").mousedown( function(e) {
 	thisTarget = $(e.target).parent().attr('id');
+	console.log(thisTarget);
 });
 $(document).mouseup( function(e) {
 	if (thisTarget !== null) {
-		var thisValue = $("#" + thisTarget).s.ider("value");
+		var thisValue = $("#" + thisTarget).slider("value");
+		console.log(thisValue);
 		socket.emit('update', {name: thisTarget, value: thisValue});
 		thisTarget = null;
 	}

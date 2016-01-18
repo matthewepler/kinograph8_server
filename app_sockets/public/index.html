@@ -2,67 +2,40 @@
 <html lang="en">
     <head>
         <title>Kinograph</title>
-        <script src="https://cdn.socket.io/socket.io-1.3.5.js"></script>
+		<script src="https://cdn.socket.io/socket.io-1.3.5.js"></script>
         <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 		<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 	    <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">	
-		<script>
-			$(function() {
-				$("#sharpness").slider({
-					value: 0,
-					min: -100,
-					max: 100,
-					step: 10,
-					slide: function( event, ui ) {
-						$("#sharpness-amount").val(ui.value);
-					}
-				});
-				//$("#sharpness-amount").val( $("#sharpness-slider").slider("value") ); 
-			});
-		</script>
-   </head>
+		<script src="sliders.js"></script>
+	</head>
     
    <body>
+
         <div class="buttons">
             <button id="lamp" type="button">Lamp</button>
             <button id="frame" type="button">Frame</button>
         </div> 
+
 		<div class="preview">
 			<img id="preview-image"/>
 		</div>
+
 		<div class="settings">
 			<p>
 				<label for="sharpness-amount">Sharpness [-100, 100]</label>
 				<input type="text" id="sharpness-amount" readonly style="border:0; color:#f6931f; font-weight:bold">
 			</p>
 			<div id="sharpness"></div>	
+			
+			<p>
+				<label for="contrast-amount">Contrast [-100, 100]</label>
+				<input type="text" id="contrast-amount" readonly style="border:0; color:#f6931f; font-weight:bold">
+			</p>
+			<div id="contrast"></div>	
+
 		</div>
+
    </body>
-        <script>
-        var socket = io();
-        $("#lamp").click(function() {
-            socket.emit('lamp');
-        });
-        $("#frame").click(function() {
-            socket.emit('frame');
-        });
-		socket.on('newFrame', function(data) {
-			console.log(data);
-			console.log("hi");
-		});
 
-		var thisTarget = null;
-		$(".settings").mousedown( function(e) {
-			thisTarget = $(e.target).parent().attr('id');
-		});
-
-		$(document).mouseup( function() {
-			if (thisTarget !== null) {
-				var thisValue  = $("#" + thisTarget).slider("value");
-				socket.emit('update', {name: thisTarget, value: thisValue});
-				thisTarget = null;
-			}
-		});
-   </script>
- 
-   </html>
+   <script src="ui.js"></script>
+</html>
