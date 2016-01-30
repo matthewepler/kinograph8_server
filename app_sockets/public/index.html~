@@ -2,14 +2,13 @@
 <html lang="en">
     <head>
         <title>Kinograph</title>
-		<script src="https://cdn.socket.io/socket.io-1.3.5.js"></script>
-        <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
-		<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 	    <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">	
-		<script src="sliders.js"></script>
 	</head>
     
    <body>
+	    <div>
+			<img id="image" src="" width="25%">
+		</div>
 
         <div class="buttons">
             <button id="lamp" type="button">Lamp</button>
@@ -57,6 +56,23 @@
 			</p>
 			<div id="ev"></div>	
 
+			<p>
+				<label for="rotation-amount">Rotation [0, 360] (default = 0)</label>
+				<input type="text" id="rotation-amount" readonly style="border:0; color:#f6931f; font-weight:bold">
+			</p>
+			<div id="rotation"></div>	
+
+			<p>
+				<label for="shutter-amount">Shutter [0, 6000] (default = 100)</label>
+				<input type="text" id="shutter-amount" readonly style="border:0; color:#f6931f; font-weight:bold">
+			</p>
+			<div id="shutter"></div>
+
+			<p>
+				<label for="quality-amount">Quality [0, 100] (default = 100)</label>
+				<input type="text" id="quality-amount" readonly style="border:0; color:#f6931f; font-weight:bold">
+			</p>
+			<div id="quality"></div>
 		</div> <!-- end of 'settings' -->
 			
 		<div class="form-settings">
@@ -65,7 +81,7 @@
 				<label for="exposure">Exposure (default = "fixedfps")</label>
 				<input type="text" id="exposure-amount" readonly style="border:0; color:#f6931f; font-weight:bold">
 				<select name="exposure" id="exposure">
-					<option>fixedfps</option>
+					<option selected="selected">fixedfps</option>
 					<option>auto</option>
 					<option>night</option>
 					<option>nightpreview</option>
@@ -96,9 +112,63 @@
 					<option>horizon</option>
 				</select>
 			</p>
+
+			<p> 
+				<label for="metering">Metering (default = "matrix")</label>
+				<input type="text" id="metering-amount" readonly style="border:0; color:#f6931f; font-weight:bold">
+				<select name="metering" id="metering">
+					<option>matrix</option>
+					<option>average</option>
+					<option>spot</option>
+					<option>backlit</option>
+				</select>
+			</p>
+
+			<p> 
+				<label for="drc">Dynamic Range Compression (default = "off")</label>
+				<input type="text" id="drc-amount" readonly style="border:0; color:#f6931f; font-weight:bold">
+				<select name="drc" id="drc">
+					<option>off</option>
+					<option>low</option>
+					<option>medium</option>
+					<option>high</option>
+				</select>
+			</p>
+
+			<p> 
+				<label for="mode">Mode (default = 2)</label>
+				<input type="text" id="mode-amount" readonly style="border:0; color:#f6931f; font-weight:bold">
+				<select name="mode" id="mode">
+					<option>2</option>
+					<option>0</option>
+					<option>1</option>
+					<option>3</option>
+					<option>4</option>
+					<option>5</option>
+					<option>6</option>
+					<option>7</option>
+				</select>
+			</p>
+
+			<p> 
+				<label for="encoding">Encoding (default = "jpg")</label>
+				<input type="text" id="encoding-amount" readonly style="border:0; color:#f6931f; font-weight:bold">
+				<select name="encoding" id="encoding">
+					<option>jpg</option>
+					<option>bmp</option>
+					<option>gif</option>
+					<option>png</option>
+				</select>
+			</p>
+
+
 		</div><!-- end of 'form-settings' -->
 
    </body>
-
-   <script src="ui.js"></script>
-</html>
+	<script src="https://cdn.socket.io/socket.io-1.3.5.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <script src="spin.js"></script>
+    <script src="ui.js"></script>
+    <script src="sliders.js"></script>
+	</html>

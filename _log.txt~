@@ -149,7 +149,7 @@ THEN: get the frame working.
 
 01/17/2016
 - - - - - -
-Sliders electric.
+Sliders electric. Done-zo.
 
 NEXT: separate into basic/advanced controls. Make collapsable
 NEXT: reset defaults
@@ -167,6 +167,20 @@ cool. Add that to the list, sucka.
 Ideally, it would work like Meteor with persistent back and forth between
 client and server. I'm naieve in this realm and perhaps something like Angular
 is an option too but I'll leave it to others to help me here. I should ask
-someone. Ergh. Foiled again.
+someone. Ergh. 
 
 THEN: whatever I just decided on in the explanation above. 
+
+At some point, help/hover icons would be helpful for each setting (esp obscure
+ones like drc...)
+
+
+01/18/2016
+- - - - - -
+Before moving on to arranging the sliders into basic/advanced, I want to get
+the frame stuff working. So the goal is to set the sliders, take a picture,
+see it update on the screen.
+
+ADD: stats output in text box? Would be good for troubleshooting.
+
+

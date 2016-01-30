@@ -44,9 +44,9 @@ io.on('connection', function(socket) {
     });
     
 	socket.on('frame', function() {
-		captureFrame();
-		// sendNewFrame();	
-		// emit 'newFrame' with data object
+		captureFrame( function(data) {
+			socket.emit('newFrame', data);	
+		});
     });
 	
 	socket.on('update', function(data) {
@@ -63,7 +63,7 @@ io.on('connection', function(socket) {
 
 
 var counter = 0;
-function captureFrame() {
+function captureFrame(callback) {
     lamp.write(1);
     K.lamp.on=true;
     var frame = exec(buildExecString(), 
@@ -74,10 +74,11 @@ function captureFrame() {
 					lamp.write(0);
     				K.lamp.on=false;
                     if(verbose) console.log("\nCaptureFrame(): " + counter + " frames saved");
+					sendNewFrame(callback);
             });	
 }
  
-function sendNewFrame() {
+function sendNewFrame(callback) {
 	var filenameStr = '';
 	fs.readdir(__dirname +"/public/frames/", function(err, items) {
 		if (!err) {
@@ -88,7 +89,7 @@ function sendNewFrame() {
 		}
 
 		if (verbose) console.log("\nReturned from sendNewFrame(): " + filenameStr);
-		return {filename: filenameStr};
+		callback( {filename: '/frames/' + filenameStr} );
 	});
 }
 

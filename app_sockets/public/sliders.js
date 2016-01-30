@@ -68,25 +68,85 @@ $(function() {
 	});
 	$("#ev-amount").val($("#ev").slider("value"));
 
+	$("#rotation").slider({ // could be better or could disappear.
+		value: 0,
+		min: 0,
+		max: 360,
+		step: 1,
+		slide: function(event, ui) {
+			$("#rotation-amount").val(ui.value);
+		}
+	});
+	$("#rotation").slider("value", 0);
+	$("#rotation-amount").val($("#rotation").slider("value"));
+
+	$("#shutter").slider({ 
+		value: 100,
+		min: 0,
+		max: 1000,
+		step: 10,
+		slide: function(event, ui) {
+			$("#shutter-amount").val(ui.value);
+		}
+	});
+	$("#shutter-amount").val($("#shutter").slider("value"));
+
+	$("#quality").slider({ 
+		value: 100,
+		min: 0,
+		max: 100,
+		step: 10,
+		slide: function(event, ui) {
+			$("#quality-amount").val(ui.value);
+		}
+	});
+	$("#quality-amount").val($("#quality").slider("value"));
+
+		
 	/* form-settings */
+
 	$("#exposure").selectmenu({
 		change: function(event, ui) {
 			$("#exposure-amount").val(ui.item.value);
 		}	
 	});
 	$("#exposure-amount").val("fixedfps");
-	// delete these lines? I'm not sure what they're doing...
-	// maybe setting the orange text for the first time, before there's a change...oh, that makes sense. 
 
 	$("#awb").selectmenu({
 		change: function(event, ui) {
 			$("#awb-amount").val(ui.item.value);
 		}	
+	}); $("#awb-amount").val("off"); 
+
+	$("#metering").selectmenu({
+		change: function(event, ui) {
+			$("#metering-amount").val(ui.item.value);
+		}	
 	});
-	$("#awb-amount").val("off");
+	$("#metering-amount").val("matrix");
 
+	$("#drc").selectmenu({
+		change: function(event, ui) {
+			$("#drc-amount").val(ui.item.value);
+		}	
+	});
+	$("#drc-amount").val("off");
 
-/* end */
+	$("#mode").selectmenu({
+		change: function(event, ui) {
+			$("#mode-amount").val(ui.item.value);
+		}	
+	});
+	$("#mode-amount").val("2");
+
+	$("#encoding").selectmenu({
+		change: function(event, ui) {
+			$("#encoding-amount").val(ui.item.value);
+		}	
+	});
+	$("#encoding-amount").val("jpg");
+
+	/* end */
 });
 
 
